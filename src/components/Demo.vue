@@ -19,7 +19,7 @@
 </template>
 
 <script>
-
+// Imports calendar component
 import Calendar from './Calendar'
 
 export default {

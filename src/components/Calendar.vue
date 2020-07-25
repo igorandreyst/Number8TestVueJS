@@ -24,6 +24,7 @@ export default {
     ];
     return {
       attr: [
+        // Highlights selected day
         {
           key: 'today',
           highlight: 'blue',
@@ -33,6 +34,7 @@ export default {
             }
           ]
         },
+        // Highlights weekends
         {
           highlight: 'yellow',
           dates: [
@@ -41,14 +43,7 @@ export default {
             }
           ]
         },
-        {
-          highlight: 'green',
-          dates: [
-            {
-              weekdays: [ 2, 3, 4, 5, 6]
-            }
-          ]
-        },
+        // Highlights weekdays
         {
           highlight: 'green',
           dates: [
@@ -60,6 +55,7 @@ export default {
       ]
     }
   },
+  // Adds watch on both props to update calendar when they change
   watch: {
     numberDays(nbDays) {
       if (nbDays != 0)
@@ -69,20 +65,20 @@ export default {
     },
     selectedDate(date) {
       date = new Date(date)
+
       if (date) {
         this.attr[0].dates[0].start = new Date(date.getFullYear(), date.getMonth(), date.getDate()+1)
       }
       else
         this.attr[0].dates[0].start = new Date()
-
-      this.nbRows = Math.ceil(this.numberDays/30)
-
     }
   },
+  // Moves calendar to the selected date
   async updated() {
     var calendar = this.$refs.calendar
     await calendar.move(this.selectedDate)
   },
+  // Generates a unique key for calendar component this way updates happen when Date or Days change
   methods: {
     generateKey(date, days) {
       const uniqueKey = `${date}-${days}`;
